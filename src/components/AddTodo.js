@@ -10,8 +10,12 @@ export const AddTodo = ({addTodo}) => {
         if( !title || !desc ){
             alert("All fields are mandatory! ")
         }
+        else{
+          addTodo(title, desc)
+          setTitle("");
+          setDesc("");
+        }
 
-        addTodo(title, desc)
 
     }
 
