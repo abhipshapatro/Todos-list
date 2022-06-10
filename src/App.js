@@ -3,7 +3,14 @@ import Header from "./components/Header";
 import {Todos} from "./components/Todos";
 import Footer from "./components/Footer";
 import {AddTodo} from "./components/AddTodo";
+import { About } from "./components/About";
 import React, { useState, useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
 
 
 function App() {
@@ -15,7 +22,7 @@ function App() {
     initTodo = JSON.parse(localStorage.getItem("todos"))
   }
   const onDelete = (todo)=>{
-    console.log("I'm ondelete of todo ", todo)
+    // console.log("I'm ondelete of todo ", todo)
 
     // deleting this way doesnot work in react
     // let index = todos.indexOf(todo)
@@ -29,7 +36,7 @@ function App() {
   }
 
   const addTodo = (title, desc)=> {
-    console.log("I am adding this todo" , title,desc)
+    // console.log("I am adding this todo" , title,desc)
     let id;
     if( todos.length===0){
       id = 0;
@@ -44,7 +51,7 @@ function App() {
     }
     
     setTodos([...todos, myTodo]);
-    console.log(myTodo)
+    // console.log(myTodo)
 
     
   }
@@ -56,12 +63,24 @@ function App() {
     
   }, [todos])
 
+  
   return (
     <>
-    <Header title="My Todos List" searchBar={false } />
-    <AddTodo addTodo={addTodo} />
-    <Todos todos={todos} onDelete={onDelete} />
-    <Footer />
+    <BrowserRouter>
+      <Header title="My Todos List" searchBar={false } />
+      <Routes>
+          <Route  path="/" element={ 
+              <>
+              <AddTodo addTodo={addTodo} />
+              <Todos todos={todos} onDelete={onDelete} />
+              </>
+            }>
+          </Route>
+          <Route  path="/about" element={<About />}>
+          </Route>    
+        </Routes>
+      <Footer />
+    </BrowserRouter>
     </>
     
   );
