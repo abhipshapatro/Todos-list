@@ -3,10 +3,17 @@ import Header from "./components/Header";
 import {Todos} from "./components/Todos";
 import Footer from "./components/Footer";
 import {AddTodo} from "./components/AddTodo";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 function App() {
+  let initTodo;
+  if(localStorage.getItem("todos") === null){
+    initTodo = [];
+  }
+  else{
+    initTodo = JSON.parse(localStorage.getItem("todos"))
+  }
   const onDelete = (todo)=>{
     console.log("I'm ondelete of todo ", todo)
 
@@ -17,6 +24,7 @@ function App() {
     setTodos( todos.filter((e)=> {
       return e!==todo;
     }));
+    localStorage.setItem("todos", JSON.stringify(todos));
 
   }
 
@@ -37,28 +45,13 @@ function App() {
     
     setTodos([...todos, myTodo]);
     console.log(myTodo)
+
     
   }
 
+  const [todos, setTodos] = useState(initTodo);
+  
 
-
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: "Abc",
-      desc: "Writing alphabets1"
-    },
-    {
-      id: 2,
-      title: "Bcd",
-      desc: "Writing alphabets2"
-    },
-    {
-      id: 3,
-      title: "Cde",
-      desc: "Writing alphabets3"
-    }
-  ]);
   return (
     <>
     <Header title="My Todos List" searchBar={false } />
@@ -72,3 +65,19 @@ function App() {
 
 export default App;
 
+
+// {
+//   id: 1,
+//   title: "Abc",
+//   desc: "Writing alphabets1"
+// },
+// {
+//   id: 2,
+//   title: "Bcd",
+//   desc: "Writing alphabets2"
+// },
+// {
+//   id: 3,
+//   title: "Cde",
+//   desc: "Writing alphabets3"
+// }
