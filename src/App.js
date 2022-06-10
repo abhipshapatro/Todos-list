@@ -50,7 +50,10 @@ function App() {
   }
 
   const [todos, setTodos] = useState(initTodo);
-  
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+    
+  }, [todos])
 
   return (
     <>
